@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.ChatMessageMapper">
+    
+    <resultMap type="ChatMessage" id="ChatMessageResult">
+        <result property="type"    column="type"    />
+        <result property="id"    column="id"    />
+        <result property="callType"    column="call_type"    />
+        <result property="contextId"    column="context_id"    />
+        <result property="uSession"    column="u_session"    />
+        <result property="toUser"    column="to_user"    />
+        <result property="channel"    column="channel"    />
+        <result property="appId"    column="app_id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="message"    column="message"    />
+        <result property="msgType"    column="msg_type"    />
+        <result property="orgi"    column="orgi"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="creater"    column="creater"    />
+        <result property="userName"    column="user_name"    />
+        <result property="agentServiceId"    column="agent_service_id"    />
+        <result property="duration"    column="duration"    />
+        <result property="fileName"    column="file_name"    />
+        <result property="fileSize"    column="file_size"    />
+        <result property="lastAgentMsgTime"    column="last_agent_msg_time"    />
+        <result property="agentReplyTime"    column="agent_reply_time"    />
+        <result property="lastMsgTime"    column="last_msg_time"    />
+        <result property="agentReplyInterval"    column="agent_reply_interval"    />
+        <result property="sessionId"    column="session_id"    />
+        <result property="dataStatus"    column="data_status"    />
+        <result property="toUserName"    column="to_user_name"    />
+        <result property="userType"    column="user_type"    />
+        <result property="dateString"    column="date_string"    />
+        <result property="imagesMsg"    column="images_msg"    />
+        <result property="agentHeadImg"    column="agent_head_img"    />
+        <result property="readStatus"    column="read_status"    />
+        <result property="autoReply"    column="auto_reply"    />
+        <result property="sendToAgentName"    column="send_to_agent_name"    />
+    </resultMap>
+
+    <sql id="selectChatMessageVo">
+        select type, id, call_type, context_id, u_session, to_user, channel, app_id, user_id, message, msg_type, orgi, create_time, creater, user_name, agent_service_id, duration, file_name, file_size, last_agent_msg_time, agent_reply_time, last_msg_time, agent_reply_interval, session_id, data_status, to_user_name, user_type, date_string, images_msg, agent_head_img, read_status, auto_reply, send_to_agent_name from chat_message
+    </sql>
+
+    <select id="selectChatMessageList" parameterType="ChatMessage" resultMap="ChatMessageResult">
+        <include refid="selectChatMessageVo"/>
+        <where>  
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="callType != null  and callType != ''"> and call_type = #{callType}</if>
+            <if test="contextId != null  and contextId != ''"> and context_id = #{contextId}</if>
+            <if test="uSession != null  and uSession != ''"> and u_session = #{uSession}</if>
+            <if test="toUser != null  and toUser != ''"> and to_user = #{toUser}</if>
+            <if test="channel != null  and channel != ''"> and channel = #{channel}</if>
+            <if test="appId != null  and appId != ''"> and app_id = #{appId}</if>
+            <if test="userId != null  and userId != ''"> and user_id = #{userId}</if>
+            <if test="message != null  and message != ''"> and message = #{message}</if>
+            <if test="msgType != null  and msgType != ''"> and msg_type = #{msgType}</if>
+            <if test="orgi != null  and orgi != ''"> and orgi = #{orgi}</if>
+            <if test="creater != null  and creater != ''"> and creater = #{creater}</if>
+            <if test="userName != null  and userName != ''"> and user_name like concat('%', #{userName}, '%')</if>
+            <if test="agentServiceId != null  and agentServiceId != ''"> and agent_service_id = #{agentServiceId}</if>
+            <if test="duration != null  and duration != ''"> and duration = #{duration}</if>
+            <if test="fileName != null  and fileName != ''"> and file_name like concat('%', #{fileName}, '%')</if>
+            <if test="fileSize != null "> and file_size = #{fileSize}</if>
+            <if test="lastAgentMsgTime != null "> and last_agent_msg_time = #{lastAgentMsgTime}</if>
+            <if test="agentReplyTime != null "> and agent_reply_time = #{agentReplyTime}</if>
+            <if test="lastMsgTime != null "> and last_msg_time = #{lastMsgTime}</if>
+            <if test="agentReplyInterval != null "> and agent_reply_interval = #{agentReplyInterval}</if>
+            <if test="sessionId != null  and sessionId != ''"> and session_id = #{sessionId}</if>
+            <if test="dataStatus != null "> and data_status = #{dataStatus}</if>
+            <if test="toUserName != null  and toUserName != ''"> and to_user_name like concat('%', #{toUserName}, '%')</if>
+            <if test="userType != null "> and user_type = #{userType}</if>
+            <if test="dateString != null  and dateString != ''"> and date_string = #{dateString}</if>
+            <if test="imagesMsg != null  and imagesMsg != ''"> and images_msg = #{imagesMsg}</if>
+            <if test="agentHeadImg != null  and agentHeadImg != ''"> and agent_head_img = #{agentHeadImg}</if>
+            <if test="readStatus != null "> and read_status = #{readStatus}</if>
+            <if test="autoReply != null "> and auto_reply = #{autoReply}</if>
+            <if test="sendToAgentName != null  and sendToAgentName != ''"> and send_to_agent_name like concat('%', #{sendToAgentName}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectChatMessageById" parameterType="String" resultMap="ChatMessageResult">
+        <include refid="selectChatMessageVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertChatMessage" parameterType="ChatMessage">
+        insert into chat_message
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="type != null">type,</if>
+            <if test="id != null">id,</if>
+            <if test="callType != null">call_type,</if>
+            <if test="contextId != null">context_id,</if>
+            <if test="uSession != null">u_session,</if>
+            <if test="toUser != null">to_user,</if>
+            <if test="channel != null">channel,</if>
+            <if test="appId != null">app_id,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="message != null">message,</if>
+            <if test="msgType != null">msg_type,</if>
+            <if test="orgi != null">orgi,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="creater != null">creater,</if>
+            <if test="userName != null">user_name,</if>
+            <if test="agentServiceId != null">agent_service_id,</if>
+            <if test="duration != null">duration,</if>
+            <if test="fileName != null">file_name,</if>
+            <if test="fileSize != null">file_size,</if>
+            <if test="lastAgentMsgTime != null">last_agent_msg_time,</if>
+            <if test="agentReplyTime != null">agent_reply_time,</if>
+            <if test="lastMsgTime != null">last_msg_time,</if>
+            <if test="agentReplyInterval != null">agent_reply_interval,</if>
+            <if test="sessionId != null">session_id,</if>
+            <if test="dataStatus != null">data_status,</if>
+            <if test="toUserName != null">to_user_name,</if>
+            <if test="userType != null">user_type,</if>
+            <if test="dateString != null">date_string,</if>
+            <if test="imagesMsg != null">images_msg,</if>
+            <if test="agentHeadImg != null">agent_head_img,</if>
+            <if test="readStatus != null">read_status,</if>
+            <if test="autoReply != null">auto_reply,</if>
+            <if test="sendToAgentName != null">send_to_agent_name,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="type != null">#{type},</if>
+            <if test="id != null">#{id},</if>
+            <if test="callType != null">#{callType},</if>
+            <if test="contextId != null">#{contextId},</if>
+            <if test="uSession != null">#{uSession},</if>
+            <if test="toUser != null">#{toUser},</if>
+            <if test="channel != null">#{channel},</if>
+            <if test="appId != null">#{appId},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="message != null">#{message},</if>
+            <if test="msgType != null">#{msgType},</if>
+            <if test="orgi != null">#{orgi},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="creater != null">#{creater},</if>
+            <if test="userName != null">#{userName},</if>
+            <if test="agentServiceId != null">#{agentServiceId},</if>
+            <if test="duration != null">#{duration},</if>
+            <if test="fileName != null">#{fileName},</if>
+            <if test="fileSize != null">#{fileSize},</if>
+            <if test="lastAgentMsgTime != null">#{lastAgentMsgTime},</if>
+            <if test="agentReplyTime != null">#{agentReplyTime},</if>
+            <if test="lastMsgTime != null">#{lastMsgTime},</if>
+            <if test="agentReplyInterval != null">#{agentReplyInterval},</if>
+            <if test="sessionId != null">#{sessionId},</if>
+            <if test="dataStatus != null">#{dataStatus},</if>
+            <if test="toUserName != null">#{toUserName},</if>
+            <if test="userType != null">#{userType},</if>
+            <if test="dateString != null">#{dateString},</if>
+            <if test="imagesMsg != null">#{imagesMsg},</if>
+            <if test="agentHeadImg != null">#{agentHeadImg},</if>
+            <if test="readStatus != null">#{readStatus},</if>
+            <if test="autoReply != null">#{autoReply},</if>
+            <if test="sendToAgentName != null">#{sendToAgentName},</if>
+         </trim>
+    </insert>
+
+    <update id="updateChatMessage" parameterType="ChatMessage">
+        update chat_message
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="type != null">type = #{type},</if>
+            <if test="callType != null">call_type = #{callType},</if>
+            <if test="contextId != null">context_id = #{contextId},</if>
+            <if test="uSession != null">u_session = #{uSession},</if>
+            <if test="toUser != null">to_user = #{toUser},</if>
+            <if test="channel != null">channel = #{channel},</if>
+            <if test="appId != null">app_id = #{appId},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="message != null">message = #{message},</if>
+            <if test="msgType != null">msg_type = #{msgType},</if>
+            <if test="orgi != null">orgi = #{orgi},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="creater != null">creater = #{creater},</if>
+            <if test="userName != null">user_name = #{userName},</if>
+            <if test="agentServiceId != null">agent_service_id = #{agentServiceId},</if>
+            <if test="duration != null">duration = #{duration},</if>
+            <if test="fileName != null">file_name = #{fileName},</if>
+            <if test="fileSize != null">file_size = #{fileSize},</if>
+            <if test="lastAgentMsgTime != null">last_agent_msg_time = #{lastAgentMsgTime},</if>
+            <if test="agentReplyTime != null">agent_reply_time = #{agentReplyTime},</if>
+            <if test="lastMsgTime != null">last_msg_time = #{lastMsgTime},</if>
+            <if test="agentReplyInterval != null">agent_reply_interval = #{agentReplyInterval},</if>
+            <if test="sessionId != null">session_id = #{sessionId},</if>
+            <if test="dataStatus != null">data_status = #{dataStatus},</if>
+            <if test="toUserName != null">to_user_name = #{toUserName},</if>
+            <if test="userType != null">user_type = #{userType},</if>
+            <if test="dateString != null">date_string = #{dateString},</if>
+            <if test="imagesMsg != null">images_msg = #{imagesMsg},</if>
+            <if test="agentHeadImg != null">agent_head_img = #{agentHeadImg},</if>
+            <if test="readStatus != null">read_status = #{readStatus},</if>
+            <if test="autoReply != null">auto_reply = #{autoReply},</if>
+            <if test="sendToAgentName != null">send_to_agent_name = #{sendToAgentName},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteChatMessageById" parameterType="String">
+        delete from chat_message where id = #{id}
+    </delete>
+
+    <delete id="deleteChatMessageByIds" parameterType="String">
+        delete from chat_message where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

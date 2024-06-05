@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.ChatContactsMapper">
+    
+    <resultMap type="ChatContacts" id="ChatContactsResult">
+        <result property="id"    column="id"    />
+        <result property="nickName"    column="nick_name"    />
+        <result property="accountNo"    column="account_no"    />
+        <result property="dataStatus"    column="data_status"    />
+        <result property="orgi"    column="orgi"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="name"    column="name"    />
+        <result property="organ"    column="organ"    />
+        <result property="userId"    column="user_id"    />
+        <result property="msgUnreadNum"    column="msg_unread_num"    />
+        <result property="jpushToken"    column="jpush_token"    />
+        <result property="token"    column="token"    />
+        <result property="clientType"    column="client_type"    />
+        <result property="jpushPackageName"    column="jpush_package_name"    />
+        <result property="clientId"    column="client_id"    />
+    </resultMap>
+
+    <sql id="selectChatContactsVo">
+        select id, nick_name, account_no, data_status, orgi, create_time, name, organ, user_id, msg_unread_num, jpush_token, token, client_type, jpush_package_name, client_id from chat_contacts
+    </sql>
+
+    <select id="selectChatContactsList" parameterType="ChatContacts" resultMap="ChatContactsResult">
+        <include refid="selectChatContactsVo"/>
+        <where>  
+            <if test="nickName != null  and nickName != ''"> and nick_name like concat('%', #{nickName}, '%')</if>
+            <if test="accountNo != null  and accountNo != ''"> and account_no = #{accountNo}</if>
+            <if test="dataStatus != null "> and data_status = #{dataStatus}</if>
+            <if test="orgi != null  and orgi != ''"> and orgi = #{orgi}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="organ != null  and organ != ''"> and organ = #{organ}</if>
+            <if test="userId != null  and userId != ''"> and user_id = #{userId}</if>
+            <if test="msgUnreadNum != null "> and msg_unread_num = #{msgUnreadNum}</if>
+            <if test="jpushToken != null  and jpushToken != ''"> and jpush_token = #{jpushToken}</if>
+            <if test="token != null  and token != ''"> and token = #{token}</if>
+            <if test="clientType != null "> and client_type = #{clientType}</if>
+            <if test="jpushPackageName != null  and jpushPackageName != ''"> and jpush_package_name like concat('%', #{jpushPackageName}, '%')</if>
+            <if test="clientId != null  and clientId != ''"> and client_id = #{clientId}</if>
+        </where>
+    </select>
+    
+    <select id="selectChatContactsById" parameterType="String" resultMap="ChatContactsResult">
+        <include refid="selectChatContactsVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertChatContacts" parameterType="ChatContacts">
+        insert into chat_contacts
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="nickName != null">nick_name,</if>
+            <if test="accountNo != null">account_no,</if>
+            <if test="dataStatus != null">data_status,</if>
+            <if test="orgi != null">orgi,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="name != null">name,</if>
+            <if test="organ != null">organ,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="msgUnreadNum != null">msg_unread_num,</if>
+            <if test="jpushToken != null">jpush_token,</if>
+            <if test="token != null">token,</if>
+            <if test="clientType != null">client_type,</if>
+            <if test="jpushPackageName != null">jpush_package_name,</if>
+            <if test="clientId != null">client_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="nickName != null">#{nickName},</if>
+            <if test="accountNo != null">#{accountNo},</if>
+            <if test="dataStatus != null">#{dataStatus},</if>
+            <if test="orgi != null">#{orgi},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="name != null">#{name},</if>
+            <if test="organ != null">#{organ},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="msgUnreadNum != null">#{msgUnreadNum},</if>
+            <if test="jpushToken != null">#{jpushToken},</if>
+            <if test="token != null">#{token},</if>
+            <if test="clientType != null">#{clientType},</if>
+            <if test="jpushPackageName != null">#{jpushPackageName},</if>
+            <if test="clientId != null">#{clientId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateChatContacts" parameterType="ChatContacts">
+        update chat_contacts
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="nickName != null">nick_name = #{nickName},</if>
+            <if test="accountNo != null">account_no = #{accountNo},</if>
+            <if test="dataStatus != null">data_status = #{dataStatus},</if>
+            <if test="orgi != null">orgi = #{orgi},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="organ != null">organ = #{organ},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="msgUnreadNum != null">msg_unread_num = #{msgUnreadNum},</if>
+            <if test="jpushToken != null">jpush_token = #{jpushToken},</if>
+            <if test="token != null">token = #{token},</if>
+            <if test="clientType != null">client_type = #{clientType},</if>
+            <if test="jpushPackageName != null">jpush_package_name = #{jpushPackageName},</if>
+            <if test="clientId != null">client_id = #{clientId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteChatContactsById" parameterType="String">
+        delete from chat_contacts where id = #{id}
+    </delete>
+
+    <delete id="deleteChatContactsByIds" parameterType="String">
+        delete from chat_contacts where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

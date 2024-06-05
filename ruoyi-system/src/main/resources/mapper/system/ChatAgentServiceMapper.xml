@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.ChatAgentServiceMapper">
+    
+    <resultMap type="ChatAgentService" id="ChatAgentServiceResult">
+        <result property="id"    column="id"    />
+        <result property="userName"    column="user_name"    />
+        <result property="agentNo"    column="agent_no"    />
+        <result property="userId"    column="user_id"    />
+        <result property="channel"    column="channel"    />
+        <result property="loginDate"    column="login_date"    />
+        <result property="orgi"    column="orgi"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="nickName"    column="nick_name"    />
+        <result property="city"    column="city"    />
+        <result property="province"    column="province"    />
+        <result property="country"    column="country"    />
+        <result property="waittingTime"    column="waitting_time"    />
+        <result property="tokeNum"    column="toke_num"    />
+        <result property="status"    column="status"    />
+        <result property="appId"    column="app_id"    />
+        <result property="contextId"    column="context_id"    />
+        <result property="lastMessage"    column="last_message"    />
+        <result property="waittingTimeStart"    column="waitting_time_start"    />
+        <result property="lastGetMessage"    column="last_get_message"    />
+        <result property="lastMsg"    column="last_msg"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="creater"    column="creater"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="updateUser"    column="update_user"    />
+        <result property="assignedTo"    column="assigned_to"    />
+        <result property="ipAddr"    column="ip_addr"    />
+        <result property="osName"    column="os_name"    />
+        <result property="browser"    column="browser"    />
+        <result property="sessionTimes"    column="session_times"    />
+        <result property="serviceTime"    column="service_time"    />
+        <result property="region"    column="region"    />
+        <result property="agentUserName"    column="agent_user_name"    />
+        <result property="times"    column="times"    />
+        <result property="dataId"    column="data_id"    />
+        <result property="contactsId"    column="contacts_id"    />
+        <result property="createDate"    column="create_date"    />
+        <result property="trans"    column="trans"    />
+        <result property="transTime"    column="trans_time"    />
+        <result property="transMemo"    column="trans_memo"    />
+        <result property="agentReplyInterval"    column="agent_reply_interval"    />
+        <result property="agentReplyTime"    column="agent_reply_time"    />
+        <result property="avgReplyInterval"    column="avg_reply_interval"    />
+        <result property="avgReplyTime"    column="avg_reply_time"    />
+        <result property="agentReplys"    column="agent_replys"    />
+        <result property="userAsks"    column="user_asks"    />
+        <result property="agentUserId"    column="agent_user_id"    />
+        <result property="sessionId"    column="session_id"    />
+        <result property="leaveMsg"    column="leave_msg"    />
+        <result property="agentTimeout"    column="agent_timeout"    />
+        <result property="agentTimeoutTimes"    column="agent_timeout_times"    />
+        <result property="serviceTimeout"    column="service_timeout"    />
+        <result property="agentServiceTimeout"    column="agent_service_timeout"    />
+        <result property="leaveMsgStatus"    column="leave_msg_status"    />
+        <result property="agent"    column="agent"    />
+        <result property="skill"    column="skill"    />
+    </resultMap>
+
+    <sql id="selectChatAgentServiceVo">
+        select id, user_name, agent_no, user_id, channel, login_date, orgi, end_time, nick_name, city, province, country, waitting_time, toke_num, status, app_id, context_id, last_message, waitting_time_start, last_get_message, last_msg, create_time, creater, update_time, update_user, assigned_to, ip_addr, os_name, browser, session_times, service_time, region, agent_user_name, times, data_id, contacts_id, create_date, trans, trans_time, trans_memo, agent_reply_interval, agent_reply_time, avg_reply_interval, avg_reply_time, agent_replys, user_asks, agent_user_id, session_id, leave_msg, agent_timeout, agent_timeout_times, service_timeout, agent_service_timeout, leave_msg_status, agent, skill from chat_agent_service
+    </sql>
+
+    <select id="selectChatAgentServiceList" parameterType="ChatAgentService" resultMap="ChatAgentServiceResult">
+        <include refid="selectChatAgentServiceVo"/>
+        <where>  
+            <if test="userName != null  and userName != ''"> and user_name like concat('%', #{userName}, '%')</if>
+            <if test="agentNo != null  and agentNo != ''"> and agent_no = #{agentNo}</if>
+            <if test="userId != null  and userId != ''"> and user_id = #{userId}</if>
+            <if test="channel != null  and channel != ''"> and channel = #{channel}</if>
+            <if test="loginDate != null "> and login_date = #{loginDate}</if>
+            <if test="orgi != null  and orgi != ''"> and orgi = #{orgi}</if>
+            <if test="endTime != null "> and end_time = #{endTime}</if>
+            <if test="nickName != null  and nickName != ''"> and nick_name like concat('%', #{nickName}, '%')</if>
+            <if test="city != null  and city != ''"> and city = #{city}</if>
+            <if test="province != null  and province != ''"> and province = #{province}</if>
+            <if test="country != null  and country != ''"> and country = #{country}</if>
+            <if test="waittingTime != null "> and waitting_time = #{waittingTime}</if>
+            <if test="tokeNum != null "> and toke_num = #{tokeNum}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+            <if test="appId != null  and appId != ''"> and app_id = #{appId}</if>
+            <if test="contextId != null  and contextId != ''"> and context_id = #{contextId}</if>
+            <if test="lastMessage != null "> and last_message = #{lastMessage}</if>
+            <if test="waittingTimeStart != null "> and waitting_time_start = #{waittingTimeStart}</if>
+            <if test="lastGetMessage != null "> and last_get_message = #{lastGetMessage}</if>
+            <if test="lastMsg != null  and lastMsg != ''"> and last_msg = #{lastMsg}</if>
+            <if test="creater != null  and creater != ''"> and creater = #{creater}</if>
+            <if test="updateUser != null  and updateUser != ''"> and update_user = #{updateUser}</if>
+            <if test="assignedTo != null  and assignedTo != ''"> and assigned_to = #{assignedTo}</if>
+            <if test="ipAddr != null  and ipAddr != ''"> and ip_addr = #{ipAddr}</if>
+            <if test="osName != null  and osName != ''"> and os_name like concat('%', #{osName}, '%')</if>
+            <if test="browser != null  and browser != ''"> and browser = #{browser}</if>
+            <if test="sessionTimes != null "> and session_times = #{sessionTimes}</if>
+            <if test="serviceTime != null "> and service_time = #{serviceTime}</if>
+            <if test="region != null  and region != ''"> and region = #{region}</if>
+            <if test="agentUserName != null  and agentUserName != ''"> and agent_user_name like concat('%', #{agentUserName}, '%')</if>
+            <if test="times != null "> and times = #{times}</if>
+            <if test="dataId != null  and dataId != ''"> and data_id = #{dataId}</if>
+            <if test="contactsId != null  and contactsId != ''"> and contacts_id = #{contactsId}</if>
+            <if test="createDate != null  and createDate != ''"> and create_date = #{createDate}</if>
+            <if test="trans != null "> and trans = #{trans}</if>
+            <if test="transTime != null "> and trans_time = #{transTime}</if>
+            <if test="transMemo != null  and transMemo != ''"> and trans_memo = #{transMemo}</if>
+            <if test="agentReplyInterval != null "> and agent_reply_interval = #{agentReplyInterval}</if>
+            <if test="agentReplyTime != null "> and agent_reply_time = #{agentReplyTime}</if>
+            <if test="avgReplyInterval != null "> and avg_reply_interval = #{avgReplyInterval}</if>
+            <if test="avgReplyTime != null "> and avg_reply_time = #{avgReplyTime}</if>
+            <if test="agentReplys != null "> and agent_replys = #{agentReplys}</if>
+            <if test="userAsks != null "> and user_asks = #{userAsks}</if>
+            <if test="agentUserId != null  and agentUserId != ''"> and agent_user_id = #{agentUserId}</if>
+            <if test="sessionId != null  and sessionId != ''"> and session_id = #{sessionId}</if>
+            <if test="leaveMsg != null "> and leave_msg = #{leaveMsg}</if>
+            <if test="agentTimeout != null "> and agent_timeout = #{agentTimeout}</if>
+            <if test="agentTimeoutTimes != null "> and agent_timeout_times = #{agentTimeoutTimes}</if>
+            <if test="serviceTimeout != null "> and service_timeout = #{serviceTimeout}</if>
+            <if test="agentServiceTimeout != null "> and agent_service_timeout = #{agentServiceTimeout}</if>
+            <if test="leaveMsgStatus != null  and leaveMsgStatus != ''"> and leave_msg_status = #{leaveMsgStatus}</if>
+            <if test="agent != null  and agent != ''"> and agent = #{agent}</if>
+            <if test="skill != null  and skill != ''"> and skill = #{skill}</if>
+        </where>
+    </select>
+    
+    <select id="selectChatAgentServiceById" parameterType="String" resultMap="ChatAgentServiceResult">
+        <include refid="selectChatAgentServiceVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertChatAgentService" parameterType="ChatAgentService">
+        insert into chat_agent_service
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="userName != null">user_name,</if>
+            <if test="agentNo != null">agent_no,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="channel != null">channel,</if>
+            <if test="loginDate != null">login_date,</if>
+            <if test="orgi != null">orgi,</if>
+            <if test="endTime != null">end_time,</if>
+            <if test="nickName != null">nick_name,</if>
+            <if test="city != null">city,</if>
+            <if test="province != null">province,</if>
+            <if test="country != null">country,</if>
+            <if test="waittingTime != null">waitting_time,</if>
+            <if test="tokeNum != null">toke_num,</if>
+            <if test="status != null">status,</if>
+            <if test="appId != null">app_id,</if>
+            <if test="contextId != null">context_id,</if>
+            <if test="lastMessage != null">last_message,</if>
+            <if test="waittingTimeStart != null">waitting_time_start,</if>
+            <if test="lastGetMessage != null">last_get_message,</if>
+            <if test="lastMsg != null">last_msg,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="creater != null">creater,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateUser != null">update_user,</if>
+            <if test="assignedTo != null">assigned_to,</if>
+            <if test="ipAddr != null">ip_addr,</if>
+            <if test="osName != null">os_name,</if>
+            <if test="browser != null">browser,</if>
+            <if test="sessionTimes != null">session_times,</if>
+            <if test="serviceTime != null">service_time,</if>
+            <if test="region != null">region,</if>
+            <if test="agentUserName != null">agent_user_name,</if>
+            <if test="times != null">times,</if>
+            <if test="dataId != null">data_id,</if>
+            <if test="contactsId != null">contacts_id,</if>
+            <if test="createDate != null">create_date,</if>
+            <if test="trans != null">trans,</if>
+            <if test="transTime != null">trans_time,</if>
+            <if test="transMemo != null">trans_memo,</if>
+            <if test="agentReplyInterval != null">agent_reply_interval,</if>
+            <if test="agentReplyTime != null">agent_reply_time,</if>
+            <if test="avgReplyInterval != null">avg_reply_interval,</if>
+            <if test="avgReplyTime != null">avg_reply_time,</if>
+            <if test="agentReplys != null">agent_replys,</if>
+            <if test="userAsks != null">user_asks,</if>
+            <if test="agentUserId != null">agent_user_id,</if>
+            <if test="sessionId != null">session_id,</if>
+            <if test="leaveMsg != null">leave_msg,</if>
+            <if test="agentTimeout != null">agent_timeout,</if>
+            <if test="agentTimeoutTimes != null">agent_timeout_times,</if>
+            <if test="serviceTimeout != null">service_timeout,</if>
+            <if test="agentServiceTimeout != null">agent_service_timeout,</if>
+            <if test="leaveMsgStatus != null">leave_msg_status,</if>
+            <if test="agent != null">agent,</if>
+            <if test="skill != null">skill,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="userName != null">#{userName},</if>
+            <if test="agentNo != null">#{agentNo},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="channel != null">#{channel},</if>
+            <if test="loginDate != null">#{loginDate},</if>
+            <if test="orgi != null">#{orgi},</if>
+            <if test="endTime != null">#{endTime},</if>
+            <if test="nickName != null">#{nickName},</if>
+            <if test="city != null">#{city},</if>
+            <if test="province != null">#{province},</if>
+            <if test="country != null">#{country},</if>
+            <if test="waittingTime != null">#{waittingTime},</if>
+            <if test="tokeNum != null">#{tokeNum},</if>
+            <if test="status != null">#{status},</if>
+            <if test="appId != null">#{appId},</if>
+            <if test="contextId != null">#{contextId},</if>
+            <if test="lastMessage != null">#{lastMessage},</if>
+            <if test="waittingTimeStart != null">#{waittingTimeStart},</if>
+            <if test="lastGetMessage != null">#{lastGetMessage},</if>
+            <if test="lastMsg != null">#{lastMsg},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="creater != null">#{creater},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="updateUser != null">#{updateUser},</if>
+            <if test="assignedTo != null">#{assignedTo},</if>
+            <if test="ipAddr != null">#{ipAddr},</if>
+            <if test="osName != null">#{osName},</if>
+            <if test="browser != null">#{browser},</if>
+            <if test="sessionTimes != null">#{sessionTimes},</if>
+            <if test="serviceTime != null">#{serviceTime},</if>
+            <if test="region != null">#{region},</if>
+            <if test="agentUserName != null">#{agentUserName},</if>
+            <if test="times != null">#{times},</if>
+            <if test="dataId != null">#{dataId},</if>
+            <if test="contactsId != null">#{contactsId},</if>
+            <if test="createDate != null">#{createDate},</if>
+            <if test="trans != null">#{trans},</if>
+            <if test="transTime != null">#{transTime},</if>
+            <if test="transMemo != null">#{transMemo},</if>
+            <if test="agentReplyInterval != null">#{agentReplyInterval},</if>
+            <if test="agentReplyTime != null">#{agentReplyTime},</if>
+            <if test="avgReplyInterval != null">#{avgReplyInterval},</if>
+            <if test="avgReplyTime != null">#{avgReplyTime},</if>
+            <if test="agentReplys != null">#{agentReplys},</if>
+            <if test="userAsks != null">#{userAsks},</if>
+            <if test="agentUserId != null">#{agentUserId},</if>
+            <if test="sessionId != null">#{sessionId},</if>
+            <if test="leaveMsg != null">#{leaveMsg},</if>
+            <if test="agentTimeout != null">#{agentTimeout},</if>
+            <if test="agentTimeoutTimes != null">#{agentTimeoutTimes},</if>
+            <if test="serviceTimeout != null">#{serviceTimeout},</if>
+            <if test="agentServiceTimeout != null">#{agentServiceTimeout},</if>
+            <if test="leaveMsgStatus != null">#{leaveMsgStatus},</if>
+            <if test="agent != null">#{agent},</if>
+            <if test="skill != null">#{skill},</if>
+         </trim>
+    </insert>
+
+    <update id="updateChatAgentService" parameterType="ChatAgentService">
+        update chat_agent_service
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userName != null">user_name = #{userName},</if>
+            <if test="agentNo != null">agent_no = #{agentNo},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="channel != null">channel = #{channel},</if>
+            <if test="loginDate != null">login_date = #{loginDate},</if>
+            <if test="orgi != null">orgi = #{orgi},</if>
+            <if test="endTime != null">end_time = #{endTime},</if>
+            <if test="nickName != null">nick_name = #{nickName},</if>
+            <if test="city != null">city = #{city},</if>
+            <if test="province != null">province = #{province},</if>
+            <if test="country != null">country = #{country},</if>
+            <if test="waittingTime != null">waitting_time = #{waittingTime},</if>
+            <if test="tokeNum != null">toke_num = #{tokeNum},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="appId != null">app_id = #{appId},</if>
+            <if test="contextId != null">context_id = #{contextId},</if>
+            <if test="lastMessage != null">last_message = #{lastMessage},</if>
+            <if test="waittingTimeStart != null">waitting_time_start = #{waittingTimeStart},</if>
+            <if test="lastGetMessage != null">last_get_message = #{lastGetMessage},</if>
+            <if test="lastMsg != null">last_msg = #{lastMsg},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="creater != null">creater = #{creater},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updateUser != null">update_user = #{updateUser},</if>
+            <if test="assignedTo != null">assigned_to = #{assignedTo},</if>
+            <if test="ipAddr != null">ip_addr = #{ipAddr},</if>
+            <if test="osName != null">os_name = #{osName},</if>
+            <if test="browser != null">browser = #{browser},</if>
+            <if test="sessionTimes != null">session_times = #{sessionTimes},</if>
+            <if test="serviceTime != null">service_time = #{serviceTime},</if>
+            <if test="region != null">region = #{region},</if>
+            <if test="agentUserName != null">agent_user_name = #{agentUserName},</if>
+            <if test="times != null">times = #{times},</if>
+            <if test="dataId != null">data_id = #{dataId},</if>
+            <if test="contactsId != null">contacts_id = #{contactsId},</if>
+            <if test="createDate != null">create_date = #{createDate},</if>
+            <if test="trans != null">trans = #{trans},</if>
+            <if test="transTime != null">trans_time = #{transTime},</if>
+            <if test="transMemo != null">trans_memo = #{transMemo},</if>
+            <if test="agentReplyInterval != null">agent_reply_interval = #{agentReplyInterval},</if>
+            <if test="agentReplyTime != null">agent_reply_time = #{agentReplyTime},</if>
+            <if test="avgReplyInterval != null">avg_reply_interval = #{avgReplyInterval},</if>
+            <if test="avgReplyTime != null">avg_reply_time = #{avgReplyTime},</if>
+            <if test="agentReplys != null">agent_replys = #{agentReplys},</if>
+            <if test="userAsks != null">user_asks = #{userAsks},</if>
+            <if test="agentUserId != null">agent_user_id = #{agentUserId},</if>
+            <if test="sessionId != null">session_id = #{sessionId},</if>
+            <if test="leaveMsg != null">leave_msg = #{leaveMsg},</if>
+            <if test="agentTimeout != null">agent_timeout = #{agentTimeout},</if>
+            <if test="agentTimeoutTimes != null">agent_timeout_times = #{agentTimeoutTimes},</if>
+            <if test="serviceTimeout != null">service_timeout = #{serviceTimeout},</if>
+            <if test="agentServiceTimeout != null">agent_service_timeout = #{agentServiceTimeout},</if>
+            <if test="leaveMsgStatus != null">leave_msg_status = #{leaveMsgStatus},</if>
+            <if test="agent != null">agent = #{agent},</if>
+            <if test="skill != null">skill = #{skill},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteChatAgentServiceById" parameterType="String">
+        delete from chat_agent_service where id = #{id}
+    </delete>
+
+    <delete id="deleteChatAgentServiceByIds" parameterType="String">
+        delete from chat_agent_service where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
