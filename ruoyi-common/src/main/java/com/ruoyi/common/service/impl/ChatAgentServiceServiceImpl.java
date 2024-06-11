@@ -2,12 +2,12 @@ package com.ruoyi.common.service.impl;
 
 import java.util.List;
 
+import com.ruoyi.common.domain.ChatAgentService;
 import com.ruoyi.common.mapper.ChatAgentServiceMapper;
 import com.ruoyi.common.service.IChatAgentServiceService;
 import com.ruoyi.common.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.ruoyi.system.domain.ChatAgentService;
 
 /**
  * 在线客服服务记录Service业务层处理

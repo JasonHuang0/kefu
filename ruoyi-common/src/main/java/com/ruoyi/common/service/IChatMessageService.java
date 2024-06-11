@@ -1,7 +1,8 @@
 package com.ruoyi.common.service;
 
+import com.ruoyi.common.domain.ChatMessage;
+
 import java.util.List;
-import com.ruoyi.system.domain.ChatMessage;
 
 /**
  * 坐席对话Service接口

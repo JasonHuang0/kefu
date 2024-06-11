@@ -1,7 +1,8 @@
 package com.ruoyi.common.service;
 
+import com.ruoyi.common.domain.ChatAgentStatus;
+
 import java.util.List;
-import com.ruoyi.system.domain.ChatAgentStatus;
 
 /**
  * 在线客服坐席状态Service接口

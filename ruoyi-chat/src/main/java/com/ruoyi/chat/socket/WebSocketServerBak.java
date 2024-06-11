@@ -1,28 +1,16 @@
 package com.ruoyi.chat.socket;
 
-import afu.org.checkerframework.checker.oigj.qual.O;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
-import com.alibaba.fastjson2.JSON;
-import com.corundumstudio.socketio.SocketIOClient;
-import com.corundumstudio.socketio.SocketIOServer;
-import com.ruoyi.chat.utils.JsoupUtil;
-import com.ruoyi.common.domain.ChatMessage;
-import org.apache.catalina.User;
-import org.jsoup.internal.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.http.HttpSession;
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -35,16 +23,16 @@ import java.util.concurrent.ConcurrentHashMap;
  * @Description:
  *      socketServer服务器，借助socket机制来实现用户之间的私聊聊天
  */
-@ServerEndpoint(value = "/chat/im")
+//@ServerEndpoint(value = "/chat/myServer/{username}")
 @Component
-public class WebSocketServer {
+public class WebSocketServerBak {
     /**
      * <p> 变量描述如下:
      *
      * @Description:
      *      日志工具
      */
-    private static final Logger logger = LoggerFactory.getLogger(WebSocketServer.class);
+    private static final Logger logger = LoggerFactory.getLogger(WebSocketServerBak.class);
 
     /**
      * <p> 变量描述如下:
@@ -62,26 +50,10 @@ public class WebSocketServer {
      *      具体功能是每个连接一旦建立，首先将他加到用户列表属性Map中，
      *      然后向所有用户（连同自己）发送更新后的用户列表用以前端展示
      */
-//    @OnOpen
-//    public void onOpen(SocketIOClient socket) {
-//        System.out.println(socket);
-//    }
-//    @OnOpen
-//    public void onOpen(Session session, @PathParam("username") String username) {
-//        sessionMap.put(username, session);
-//        logger.info("有新用户加入，用户名为{}，当前在线总人数为{}", username, sessionMap.size());
-//        sendUserListToAllUsers();
-//    }
     @OnOpen
-    public void onOpen(Session session) {
-        Map<String, String> params = this.parseRequestParams(session);
-        final String token = params.get("token");
-        final String appid = params.get("appid");
-        String userid = params.get("userid");
-
-
-        sessionMap.put(userid, session);
-//        logger.info("有新用户加入，用户名为{}，当前在线总人数为{}", username, sessionMap.size());
+    public void onOpen(Session session, @PathParam("username") String username) {
+        sessionMap.put(username, session);
+        logger.info("有新用户加入，用户名为{}，当前在线总人数为{}", username, sessionMap.size());
         sendUserListToAllUsers();
     }
 
@@ -110,9 +82,9 @@ public class WebSocketServer {
      *  具体功能是将该用户从存储中移除，并告知所有用户
      */
     @OnClose
-    public void onClose(Session session) {
-        sessionMap.remove("1");
-        logger.info("有一个用户脱离连接，该用户名为{},用户Id为{}，当前在线人数为{}", "1", session.getId(), sessionMap.size());
+    public void onClose(Session session, @PathParam("username") String username) {
+        sessionMap.remove(username);
+        logger.info("有一个用户脱离连接，该用户名为{},用户Id为{}，当前在线人数为{}", username, session.getId(), sessionMap.size());
         sendUserListToAllUsers();
 
     }
@@ -127,12 +99,12 @@ public class WebSocketServer {
     private void sendUserListToAllUsers() {
         JSONObject result = new JSONObject();
         JSONArray jsonArray = new JSONArray();
+        result.set("users", jsonArray);
         for (Object o : sessionMap.keySet()) {
             JSONObject jsonObject = new JSONObject();
             jsonObject.set("username", o);
             jsonArray.add(jsonObject);
         }
-        result.set("users", jsonArray);
         sendAllMessage(JSONUtil.toJsonStr(result));
     }
 
@@ -144,42 +116,37 @@ public class WebSocketServer {
      *      应为socket只能做到客户和本服务器之间的信息交互，所有想要实现客户之间的信息交互，必定需要服务器做中转
      */
     @OnMessage
-//    public void onMessage(Session session,String message) {
-    public void onMessage(Session session, String message) {
-        ChatMessage chatMessage = JSON.parseObject(message,ChatMessage.class);
-        if (chatMessage == null) return;
-        String username = chatMessage.getUserName();
-//        logger.info("服务器收到用户username={}发送来的消息：{}", username, message);
-        logger.info("服务器收到用户username={}发送来的消息：{}", chatMessage.getUserName(), chatMessage.getMessage());
-//        JSONObject jsonObject = JSONUtil.parseObj(message);
-        String destinationUsername = chatMessage.getToUser();//目标用户名
+    public void onMessage(String message, @PathParam("username") String username) {
+        logger.info("服务器收到用户username={}发送来的消息：{}", username, message);
+        JSONObject jsonObject = JSONUtil.parseObj(message);
+        String destinationUsername = jsonObject.getStr("to");//目标用户名
         Session destinationSession = sessionMap.get(destinationUsername);
         if (destinationSession == null) {
             logger.info("发送失败，未找到目标客户username={}的session", destinationUsername);
         } else {
-//            if (jsonObject.getStr("function") == null) {//如果没有function字段，则书名该消息为常规的客户间的信息发送
+            if (jsonObject.getStr("function") == null) {//如果没有function字段，则书名该消息为常规的客户间的信息发送
                 JSONObject jsonObject1 = new JSONObject();
                 //重新组装消息，告知目标用户发送者
                 jsonObject1.set("from", username);
-                String msg = chatMessage.getMessage();//消息文本
-                jsonObject1.set("text", msg);
+                String text = jsonObject.getStr("text");//消息文本
+                jsonObject1.set("text", text);
                 sendMessage(jsonObject1.toString(), destinationSession);
-//            } else {
-//                String function = jsonObject.getStr("function");
-//                if (function.equals("leave")) {//当function字段为leave时，说明来源客户希望与目标客户断开交流
-//                    JSONObject jsonObject1 = new JSONObject();
-//                    //重新组装消息，告知目标用户发送者
-//                    jsonObject1.set("from", username);
-//                    jsonObject1.set("function", "leave");
-//                    sendMessage(jsonObject1.toString(), destinationSession);
-//                } else {//当function为link时，说明来源客户希望和目标客户建立交流
-//                    JSONObject jsonObject1 = new JSONObject();
-//                    //重新组装消息，告知目标用户发送者
-//                    jsonObject1.set("from", username);
-//                    jsonObject1.set("function", "link");
-//                    sendMessage(jsonObject1.toString(), destinationSession);
-//                }
-//            }
+            } else {
+                String function = jsonObject.getStr("function");
+                if (function.equals("leave")) {//当function字段为leave时，说明来源客户希望与目标客户断开交流
+                    JSONObject jsonObject1 = new JSONObject();
+                    //重新组装消息，告知目标用户发送者
+                    jsonObject1.set("from", username);
+                    jsonObject1.set("function", "leave");
+                    sendMessage(jsonObject1.toString(), destinationSession);
+                } else {//当function为link时，说明来源客户希望和目标客户建立交流
+                    JSONObject jsonObject1 = new JSONObject();
+                    //重新组装消息，告知目标用户发送者
+                    jsonObject1.set("from", username);
+                    jsonObject1.set("function", "link");
+                    sendMessage(jsonObject1.toString(), destinationSession);
+                }
+            }
         }
     }
 
@@ -191,8 +158,6 @@ public class WebSocketServer {
      */
     private void sendMessage(String text, Session destinationSession) {
         try {
-
-            text = JsoupUtil.clean(text);
             destinationSession.getBasicRemote().sendText(text);
             logger.info("向用户id为{}的用户发送消息{}", destinationSession.getId(), text);
         } catch (IOException e) {
@@ -212,20 +177,5 @@ public class WebSocketServer {
         error.printStackTrace();
     }
 
-    public  static  Map<String,  String>  parseRequestParams(Session session)  {
-        String input = session.getQueryString();
-        if (StringUtil.isBlank(input)){
-            return null;
-        }
-        input = JsoupUtil.clean(input);
-        Map<String,  String>  result  =  new HashMap<>();
-        String[]  pairs  =  input.split("&");
-        for  (String  pair  :  pairs)  {
-            int  idx  =  pair.indexOf("=");
-            String  key  =  pair.substring(0,  idx);
-            String  value  =  pair.substring(idx  +  1);
-            result.put(key,  value);
-        }
-        return  result;
-    }
+
 }

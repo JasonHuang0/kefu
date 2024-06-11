@@ -1,7 +1,8 @@
 package com.ruoyi.common.mapper;
 
+import com.ruoyi.common.domain.ChatContacts;
+
 import java.util.List;
-import com.ruoyi.system.domain.ChatContacts;
 
 /**
  * 联系人信息Mapper接口

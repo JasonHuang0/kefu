@@ -1,7 +1,8 @@
 package com.ruoyi.common.service;
 
+import com.ruoyi.common.domain.ChatAgentuserContacts;
+
 import java.util.List;
-import com.ruoyi.system.domain.ChatAgentuserContacts;
 
 /**
  * 访客联系人关联Service接口

@@ -2,12 +2,12 @@ package com.ruoyi.common.service.impl;
 
 import java.util.List;
 
+import com.ruoyi.common.domain.ChatContacts;
 import com.ruoyi.common.mapper.ChatContactsMapper;
 import com.ruoyi.common.service.IChatContactsService;
 import com.ruoyi.common.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.ruoyi.system.domain.ChatContacts;
 
 /**
  * 联系人信息Service业务层处理

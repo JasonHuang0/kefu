@@ -1,7 +1,8 @@
 package com.ruoyi.common.service;
 
+import com.ruoyi.common.domain.ChatAgentService;
+
 import java.util.List;
-import com.ruoyi.system.domain.ChatAgentService;
 
 /**
  * 在线客服服务记录Service接口

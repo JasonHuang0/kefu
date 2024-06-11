@@ -389,9 +389,111 @@ export default {
         }, []);
       }
     },
+    connect(){
+      let socket;
+      let _this = this;
+      /*
+      判断浏览器是否支持webSocket
+      */
+      if (typeof (WebSocket) == "undefined") {
+        console.log("您的浏览器不支持WebSocket");
+      } else {
+        console.log("您的浏览器支持WebSocket");
+        // let socketUrl = "ws://localhost:8080/chat/myServer/" + this.user.username;
+        let socketUrl = "ws://localhost:8080/chat/im?appid=123&userid=45666&username=沃尔夫";
+        if (socket != null) {
+          socket.close();
+          socket = null;
+        }
+        /*
+        开启一个websocket服务
+         */
+        socket = new WebSocket(socketUrl);
+        this.handleSocket(socket, _this);
+      }
+    },
+    handleSocket(socket, _this) {
+      /*
+      打开事件
+       */
+      socket.onopen = function () {
+        console.log("websocket已打开");
+      };
+
+      /*
+      浏览器端收消息，获得从服务端发送过来的文本消息
+       */
+      socket.onmessage = function (msg) {
+        console.log("收到数据====" + msg.data)
+        // 对收到的json数据进行解析，
+        // //类似这样的： {"users": [{"username": "zhang"},{ "username": "admin"}]}
+        let data = JSON.parse(msg.data)
+        console.log(data)
+        /*
+          如果存在该users字段，说明这时公共消息，则如下处理，
+          获取当前连接的所有用户信息，并且使用vue过滤器将本人排除在在线用户展示列表之外，
+          使得自己不会出现在自己的聊天列表里
+           */
+        if (data.users) {
+          _this.users = data.users.filter(user => user.username.trim() !== _this.user.username.trim())
+        }
+        /*
+        如果不存在users字段，且不存在text字段时，
+        则说明信息为控制类信息，做一下处理
+         */
+        else if(data.text==null){
+          let tip = data.function;
+          console.log("function:"+tip);
+          let remoteFriend = data.from;
+          /*
+          当控制信息为leave时，
+          说明之前想和自己通信的用户取消了和自己通信的请求
+          做以下操作
+           */
+          if(tip==='leave'){
+            _this.handleDisconnect(remoteFriend)
+          }
+          /*
+          当控制信息为link时，
+          说明有用户发起了想和自己通信的请求
+          做以下操作
+           */
+          else if(tip==='link'){
+            _this.handleRequest(remoteFriend)
+          }
+        }
+        /*
+          如果包含text字段，则说明是常规聊天信息
+          形如：  {"from": "zhang", "text": "hello"}
+        */
+        else {
+          if (data.from === _this.chatUser) {
+            /*
+            构建消息内容
+             */
+            _this.createContent(data.from, null, data.text)
+          }
+        }
+      };
+
+      /*
+      关闭事件
+       */
+      socket.onclose = function () {
+        console.log("websocket已关闭");
+      };
+
+      /*
+      发生了错误事件
+       */
+      socket.onerror = function () {
+        console.log("websocket发生了错误");
+      }
+    },
   },
   mounted() {
     this.list = getListArr();
+    this.connect();
   },
 };
 </script>
