@@ -51,10 +51,7 @@
             <artifactId>hutool-all</artifactId>
             <version>5.8.10</version>
         </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-        </dependency>
+
         <!--通用mapper-->
         <dependency>
             <groupId>tk.mybatis</groupId>
@@ -99,7 +96,7 @@
         <!-- 通用工具-->
         <dependency>
             <groupId>com.ruoyi</groupId>
-            <artifactId>ruoyi-common</artifactId>
+            <artifactId>ruoyi-system</artifactId>
         </dependency>
     </dependencies>
 

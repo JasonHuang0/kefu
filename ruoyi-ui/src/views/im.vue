@@ -162,6 +162,7 @@ export default {
   components: {},
   data() {
     return {
+      socket: null,
       scrollType: 'noroll', // scroll  noroll 俩种类型
       placeholder: "欢迎使用JwChat...",
       inputMsg: "",
@@ -337,6 +338,16 @@ export default {
         img: "image/three.jpeg",
       };
       this.list.push(msgObj);
+      const msgObj1 = {
+        date: "2020/05/20 23:19:07",
+        message: msg,
+        mine: true,
+        name: "JwChat",
+        msgType: "image/three.jpeg",
+        type: "image/three.jpeg",
+        toUser: "45666",
+      };
+      this.socket.send(JSON.stringify(msgObj1))
     },
     /**
      * @description:
@@ -390,7 +401,7 @@ export default {
       }
     },
     connect(){
-      let socket;
+
       let _this = this;
       /*
       判断浏览器是否支持webSocket
@@ -401,15 +412,15 @@ export default {
         console.log("您的浏览器支持WebSocket");
         // let socketUrl = "ws://localhost:8080/chat/myServer/" + this.user.username;
         let socketUrl = "ws://localhost:8080/chat/im?appid=123&userid=45666&username=沃尔夫";
-        if (socket != null) {
-          socket.close();
-          socket = null;
+        if (this.socket != null) {
+          this.socket.close();
+          this.socket = null;
         }
         /*
         开启一个websocket服务
          */
-        socket = new WebSocket(socketUrl);
-        this.handleSocket(socket, _this);
+        this.socket = new WebSocket(socketUrl);
+        this.handleSocket(this.socket, _this);
       }
     },
     handleSocket(socket, _this) {

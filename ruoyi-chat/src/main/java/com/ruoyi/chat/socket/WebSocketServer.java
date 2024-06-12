@@ -8,12 +8,16 @@ import com.alibaba.fastjson2.JSON;
 import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.SocketIOServer;
 import com.ruoyi.chat.utils.JsoupUtil;
+import com.ruoyi.common.auth.AuthToken;
+import com.ruoyi.common.domain.ChatContacts;
 import com.ruoyi.common.domain.ChatMessage;
 import org.apache.catalina.User;
 import org.jsoup.internal.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
+import org.springframework.security.core.token.TokenService;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpSession;
@@ -38,6 +42,8 @@ import java.util.concurrent.ConcurrentHashMap;
 @ServerEndpoint(value = "/chat/im")
 @Component
 public class WebSocketServer {
+    @Autowired
+    private AuthToken tokenService;
     /**
      * <p> 变量描述如下:
      *
@@ -146,9 +152,13 @@ public class WebSocketServer {
     @OnMessage
 //    public void onMessage(Session session,String message) {
     public void onMessage(Session session, String message) {
+        Map<String, String> pathParameters = session.getPathParameters();
+        
         ChatMessage chatMessage = JSON.parseObject(message,ChatMessage.class);
         if (chatMessage == null) return;
         String username = chatMessage.getUserName();
+        //发送者 从token获取
+        
 //        logger.info("服务器收到用户username={}发送来的消息：{}", username, message);
         logger.info("服务器收到用户username={}发送来的消息：{}", chatMessage.getUserName(), chatMessage.getMessage());
 //        JSONObject jsonObject = JSONUtil.parseObj(message);
@@ -217,15 +227,22 @@ public class WebSocketServer {
         if (StringUtil.isBlank(input)){
             return null;
         }
-        input = JsoupUtil.clean(input);
         Map<String,  String>  result  =  new HashMap<>();
         String[]  pairs  =  input.split("&");
         for  (String  pair  :  pairs)  {
             int  idx  =  pair.indexOf("=");
             String  key  =  pair.substring(0,  idx);
             String  value  =  pair.substring(idx  +  1);
-            result.put(key,  value);
+            result.put(key,  JsoupUtil.clean(value));
         }
         return  result;
+    }
+    
+    private ChatContacts findBySession(Session session){
+        Map<String, String> params = this.parseRequestParams(session);
+        String token = params.get("token");
+        return tokenService.findClientUserByAuth(token);
+
+
     }
 }

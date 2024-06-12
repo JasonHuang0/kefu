@@ -1,5 +1,6 @@
 package com.ruoyi.common.constant;
 
+import com.ruoyi.common.utils.spring.SpringUtils;
 import io.jsonwebtoken.Claims;
 
 /**
@@ -9,6 +10,11 @@ import io.jsonwebtoken.Claims;
  */
 public class Constants
 {
+    /**
+     * UTF-8 字符集
+     */
+    public static final String SYSTEM_NAME = "Chat";
+    public static final String SIGN_KEY = "SIGN_KEY";
     /**
      * UTF-8 字符集
      */
@@ -139,4 +145,6 @@ public class Constants
      */
     public static final String[] JOB_ERROR_STR = { "java.net.URL", "javax.naming.InitialContext", "org.yaml.snakeyaml",
             "org.springframework", "org.apache", "com.ruoyi.common.utils.file" };
+
+
 }
