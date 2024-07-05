@@ -1,5 +1,6 @@
 package com.ruoyi.common.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.ruoyi.common.domain.ChatMessage;
 
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
  * @author ruoyi
  * @date 2024-06-05
  */
-public interface ChatMessageMapper 
+public interface ChatMessageMapper extends BaseMapper<ChatMessage>
 {
     /**
      * 查询坐席对话

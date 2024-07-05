@@ -38,7 +38,8 @@ public class AuthToken {
 
     private  final  Logger logger = LoggerFactory.getLogger(AuthToken.class);
 
-    @Value("${server.session-timeout}")
+//    @Value("${server.session-timeout}")
+    @Value("2000")
     private int timeout;
 
     @Autowired

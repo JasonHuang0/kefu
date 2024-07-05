@@ -1,5 +1,6 @@
 package com.ruoyi.common.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.ruoyi.common.domain.ChatAgentStatus;
 
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
  * @author ruoyi
  * @date 2024-06-05
  */
-public interface IChatAgentStatusService 
+public interface IChatAgentStatusService extends IService<ChatAgentStatus>
 {
     /**
      * 查询在线客服坐席状态
@@ -59,4 +60,6 @@ public interface IChatAgentStatusService
      * @return 结果
      */
     public int deleteChatAgentStatusById(String id);
+
+    public int saveOrUpdateAgentStatus(ChatAgentStatus chatAgentStatus);
 }

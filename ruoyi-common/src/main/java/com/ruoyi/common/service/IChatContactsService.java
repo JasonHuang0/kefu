@@ -1,5 +1,6 @@
 package com.ruoyi.common.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.ruoyi.common.domain.ChatContacts;
 
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
  * @author ruoyi
  * @date 2024-06-05
  */
-public interface IChatContactsService 
+public interface IChatContactsService extends IService<ChatContacts>
 {
     /**
      * 查询联系人信息
@@ -59,4 +60,6 @@ public interface IChatContactsService
      * @return 结果
      */
     public int deleteChatContactsById(String id);
+
+    ChatContacts findByUserIdAndDatatStatus(String userId, boolean dataStatus);
 }

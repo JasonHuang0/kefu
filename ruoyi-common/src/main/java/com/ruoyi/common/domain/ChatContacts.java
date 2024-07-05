@@ -28,7 +28,7 @@ public class ChatContacts extends BaseEntity
 
     /** 数据状态 */
     @Excel(name = "数据状态")
-    private Long dataStatus;
+    private Boolean dataStatus;
 
     /** 租户标识 */
     @Excel(name = "租户标识")
@@ -60,7 +60,7 @@ public class ChatContacts extends BaseEntity
 
     /** 客户类型 */
     @Excel(name = "客户类型")
-    private Long clientType;
+    private Integer clientType;
 
     /** $column.columnComment */
     @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
@@ -97,12 +97,12 @@ public class ChatContacts extends BaseEntity
     {
         return accountNo;
     }
-    public void setDataStatus(Long dataStatus) 
+    public void setDataStatus(Boolean dataStatus)
     {
         this.dataStatus = dataStatus;
     }
 
-    public Long getDataStatus() 
+    public Boolean getDataStatus()
     {
         return dataStatus;
     }
@@ -169,12 +169,12 @@ public class ChatContacts extends BaseEntity
     {
         return token;
     }
-    public void setClientType(Long clientType) 
+    public void setClientType(Integer clientType)
     {
         this.clientType = clientType;
     }
 
-    public Long getClientType() 
+    public Integer getClientType()
     {
         return clientType;
     }

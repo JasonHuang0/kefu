@@ -142,7 +142,7 @@ public class ApiClientController {
         }
         ClientRes clientRes = JSONObject.parseObject(decryptData, ClientRes.class);
 //        clientRes.setOrganId(snsAccount.getOrgan());
-//        clientRes.setAppKey(snsAccount.getAppkey());
+//        clientRes.setAppKey(Constants.SIGN_KEY);
         return clientRes;
     }
 

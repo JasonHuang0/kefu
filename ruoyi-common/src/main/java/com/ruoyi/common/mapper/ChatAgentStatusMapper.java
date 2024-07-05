@@ -1,5 +1,6 @@
 package com.ruoyi.common.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.ruoyi.common.domain.ChatAgentStatus;
 
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
  * @author ruoyi
  * @date 2024-06-05
  */
-public interface ChatAgentStatusMapper 
+public interface ChatAgentStatusMapper extends BaseMapper<ChatAgentStatus>
 {
     /**
      * 查询在线客服坐席状态
@@ -19,6 +20,7 @@ public interface ChatAgentStatusMapper
      * @return 在线客服坐席状态
      */
     public ChatAgentStatus selectChatAgentStatusById(String id);
+    public ChatAgentStatus selectChatAgentStatusByUserId(String userId);
 
     /**
      * 查询在线客服坐席状态列表

@@ -7,6 +7,9 @@
         <groupId>com.ruoyi</groupId>
         <version>3.8.4</version>
     </parent>
+    <properties>
+        <mybatis-plus.version>3.4.2</mybatis-plus.version>
+    </properties>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>ruoyi-common</artifactId>
@@ -132,7 +135,21 @@
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>${mybatis-plus.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-annotation</artifactId>
+            <version>${mybatis-plus.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-extension</artifactId>
+            <version>${mybatis-plus.version}</version>
+        </dependency>
     </dependencies>
 
 </project>

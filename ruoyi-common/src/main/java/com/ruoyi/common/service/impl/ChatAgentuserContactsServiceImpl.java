@@ -2,7 +2,10 @@ package com.ruoyi.system.service.impl;
 
 import java.util.List;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.ruoyi.common.domain.ChatAgentStatus;
 import com.ruoyi.common.domain.ChatAgentuserContacts;
+import com.ruoyi.common.mapper.ChatAgentStatusMapper;
 import com.ruoyi.common.mapper.ChatAgentuserContactsMapper;
 import com.ruoyi.common.service.IChatAgentuserContactsService;
 import com.ruoyi.common.utils.DateUtils;
@@ -16,7 +19,7 @@ import org.springframework.stereotype.Service;
  * @date 2024-06-05
  */
 @Service
-public class ChatAgentuserContactsServiceImpl implements IChatAgentuserContactsService
+public class ChatAgentuserContactsServiceImpl extends ServiceImpl<ChatAgentuserContactsMapper, ChatAgentuserContacts> implements IChatAgentuserContactsService
 {
     @Autowired
     private ChatAgentuserContactsMapper chatAgentuserContactsMapper;

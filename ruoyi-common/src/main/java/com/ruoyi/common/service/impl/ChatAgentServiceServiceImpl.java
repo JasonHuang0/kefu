@@ -2,7 +2,9 @@ package com.ruoyi.common.service.impl;
 
 import java.util.List;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ruoyi.common.domain.ChatAgentService;
+import com.ruoyi.common.domain.ChatAgentStatus;
 import com.ruoyi.common.mapper.ChatAgentServiceMapper;
 import com.ruoyi.common.service.IChatAgentServiceService;
 import com.ruoyi.common.utils.DateUtils;
@@ -16,7 +18,7 @@ import org.springframework.stereotype.Service;
  * @date 2024-06-05
  */
 @Service
-public class ChatAgentServiceServiceImpl implements IChatAgentServiceService
+public class ChatAgentServiceServiceImpl extends ServiceImpl<ChatAgentServiceMapper, ChatAgentService> implements IChatAgentServiceService
 {
     @Autowired
     private ChatAgentServiceMapper chatAgentServiceMapper;

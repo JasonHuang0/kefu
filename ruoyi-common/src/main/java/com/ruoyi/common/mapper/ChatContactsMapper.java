@@ -1,5 +1,6 @@
 package com.ruoyi.common.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.ruoyi.common.domain.ChatContacts;
 
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
  * @author ruoyi
  * @date 2024-06-05
  */
-public interface ChatContactsMapper 
+public interface ChatContactsMapper extends BaseMapper<ChatContacts>
 {
     /**
      * 查询联系人信息

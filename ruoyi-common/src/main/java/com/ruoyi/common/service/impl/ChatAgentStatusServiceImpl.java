@@ -2,10 +2,12 @@ package com.ruoyi.common.service.impl;
 
 import java.util.List;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ruoyi.common.domain.ChatAgentStatus;
 import com.ruoyi.common.mapper.ChatAgentStatusMapper;
 import com.ruoyi.common.service.IChatAgentStatusService;
 import com.ruoyi.common.utils.DateUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +18,7 @@ import org.springframework.stereotype.Service;
  * @date 2024-06-05
  */
 @Service
-public class ChatAgentStatusServiceImpl implements IChatAgentStatusService
+public class ChatAgentStatusServiceImpl extends ServiceImpl<ChatAgentStatusMapper, ChatAgentStatus> implements IChatAgentStatusService
 {
     @Autowired
     private ChatAgentStatusMapper chatAgentStatusMapper;
@@ -93,5 +95,16 @@ public class ChatAgentStatusServiceImpl implements IChatAgentStatusService
     public int deleteChatAgentStatusById(String id)
     {
         return chatAgentStatusMapper.deleteChatAgentStatusById(id);
+    }
+
+    //参数 状态加userid
+    @Override
+    public int saveOrUpdateAgentStatus(ChatAgentStatus chatAgentStatus) {
+        ChatAgentStatus entity = chatAgentStatusMapper.selectChatAgentStatusByUserId(chatAgentStatus.getUserId());
+//        if (entity != null){
+//            BeanUtils.copyProperties(user,cacheUser);
+//            entity.setStatus(c);
+//        }
+        return 0;
     }
 }

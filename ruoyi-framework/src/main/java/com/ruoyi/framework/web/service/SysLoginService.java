@@ -1,6 +1,8 @@
 package com.ruoyi.framework.web.service;
 
 import javax.annotation.Resource;
+
+import com.ruoyi.common.service.IChatAgentStatusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -50,6 +52,9 @@ public class SysLoginService
     @Autowired
     private ISysConfigService configService;
 
+    @Autowired
+    private IChatAgentStatusService chatAgentStatusService;
+
     /**
      * 登录验证
      * 
@@ -96,6 +101,7 @@ public class SysLoginService
         AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_SUCCESS, MessageUtils.message("user.login.success")));
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
         recordLoginInfo(loginUser.getUserId());
+        //TODO 生成 chatAgentStatusService 记录
         // 生成token
         return tokenService.createToken(loginUser);
     }

@@ -20,9 +20,7 @@ public class ChatAgentStatus extends BaseEntity
     /** 主键ID */
     private String id;
 
-    /** 坐席ID */
-    @Excel(name = "坐席ID")
-    private String agentNo;
+
 
     /** 登录时间 */
     @JsonFormat(pattern = "yyyy-MM-dd")
@@ -82,15 +80,7 @@ public class ChatAgentStatus extends BaseEntity
     {
         return id;
     }
-    public void setAgentNo(String agentNo) 
-    {
-        this.agentNo = agentNo;
-    }
 
-    public String getAgentNo() 
-    {
-        return agentNo;
-    }
     public void setLoginDate(Date loginDate) 
     {
         this.loginDate = loginDate;
@@ -204,7 +194,6 @@ public class ChatAgentStatus extends BaseEntity
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
-            .append("agentNo", getAgentNo())
             .append("loginDate", getLoginDate())
             .append("status", getStatus())
             .append("maxUsers", getMaxUsers())
